@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحدي التطبيقات - رياضيات أول ثانوي</title>
+<style>
+:root{
+  --bg:#081525;--card:#10243a;--card2:#17314d;--accent:#28c7d9;--accent2:#ffd166;
+  --good:#32d583;--bad:#ff6b6b;--text:#f7fbff;--muted:#b8c9d9;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:radial-gradient(circle at top,#16395a 0,#081525 52%,#050c15 100%);color:var(--text);min-height:100vh}
+button,input{font:inherit}
+.container{max-width:900px;margin:auto;padding:18px}
+header{background:linear-gradient(135deg,#123453,#0c1e32);border:1px solid #275375;border-radius:22px;padding:22px;text-align:center;box-shadow:0 12px 35px #0006}
+.logo{font-size:38px;font-weight:900;color:var(--accent)}
+h1{margin:5px 0;font-size:28px} h2{margin:5px 0 15px}
+.badge{display:inline-block;background:#ffffff12;border:1px solid #ffffff20;padding:7px 12px;border-radius:999px;color:var(--muted);font-size:14px}
+.card{background:#10243aee;border:1px solid #2a4c68;border-radius:20px;padding:22px;margin-top:16px;box-shadow:0 10px 30px #0005}
+.hidden{display:none!important}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+label{display:block;color:var(--muted);margin-bottom:6px}
+input[type=text]{width:100%;padding:13px 15px;border-radius:12px;border:1px solid #3b5d77;background:#091a2b;color:white;outline:none}
+.btn{border:0;border-radius:13px;padding:13px 18px;cursor:pointer;font-weight:800;transition:.2s}
+.btn:hover{transform:translateY(-1px)}
+.primary{background:var(--accent);color:#06202a}.gold{background:var(--accent2);color:#2b2100}.ghost{background:#ffffff10;color:#fff;border:1px solid #ffffff22}
+.danger{background:#ff6b6b;color:#250000}
+.mode{padding:18px;border:1px solid #355a76;border-radius:16px;background:#0b1d30;cursor:pointer}
+.mode.selected{border-color:var(--accent);box-shadow:0 0 0 2px #28c7d955}
+.mode strong{display:block;font-size:18px;margin-bottom:5px}.mode span{color:var(--muted);font-size:13px}
+.topbar{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:var(--muted)}
+.progress{height:10px;background:#06111e;border-radius:99px;overflow:hidden;margin:12px 0 18px}
+.progress>div{height:100%;background:linear-gradient(90deg,var(--accent),#72f0ff);width:0%;transition:.3s}
+.question{font-size:24px;line-height:1.7;font-weight:800;margin:15px 0}
+.topic{color:var(--accent);font-size:14px;font-weight:bold}
+.options{display:grid;gap:10px}
+.option{background:#132d47;color:white;border:1px solid #345875;border-radius:14px;padding:15px;text-align:right;cursor:pointer}
+.option:hover{background:#193a59}.option.correct{background:#124d3c;border-color:var(--good)}
+.option.wrong{background:#552c31;border-color:var(--bad)}
+.option:disabled{cursor:default}
+.feedback{margin-top:15px;padding:15px;border-radius:14px;line-height:1.8}
+.feedback.good{background:#0d3b2e;border:1px solid #2a9d75}.feedback.bad{background:#48252b;border:1px solid #bd5660}
+.nextrow{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:10px}
+.timer{font-weight:900;color:var(--accent2)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.stat{background:#0a1b2c;border:1px solid #29465e;border-radius:15px;padding:15px;text-align:center}
+.stat b{display:block;font-size:25px;margin-bottom:5px}.stat span{color:var(--muted);font-size:13px}
+table{width:100%;border-collapse:collapse;margin-top:12px}th,td{padding:10px;border-bottom:1px solid #29465e;text-align:center}th{color:var(--accent)}
+.small{font-size:13px;color:var(--muted);line-height:1.7}
+.footer{text-align:center;color:#89a2b8;margin:18px 0 8px;font-size:13px}
+#diagram{background:#0a1b2c;border:1px dashed #3d6a89;border-radius:16px;padding:15px;margin:12px 0;text-align:center;font-family:monospace;font-size:17px;white-space:pre-line}
+.streak{color:var(--accent2);font-weight:bold}
+@media(max-width:600px){.container{padding:10px}.logo{font-size:30px}h1{font-size:23px}.question{font-size:20px}.card{padding:16px}}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="logo">⚡ تحدّي التطبيقات</div>
+  <h1>رياضيات — الصف الأول الثانوي 🇾🇪</h1>
+  <div class="badge">الوحدة الثانية • التطبيق • تمثيل التطبيق • الصورة العكسية</div>
+  <div class="small" style="margin-top:10px">لعبة تدريبية مبنية على الصفحات التي أرسلتها — تعمل دون إنترنت.</div>
+</header>
+
+<section id="setup" class="card">
+  <h2>ابدأ التحدي</h2>
+  <div class="grid">
+    <div>
+      <label>اسم الطالب الأول</label>
+      <input id="p1" type="text" placeholder="مثلاً: أحمد">
+    </div>
+    <div id="p2box">
+      <label>اسم الطالب الثاني</label>
+      <input id="p2" type="text" placeholder="اختياري في اللعب الثنائي">
+    </div>
+  </div>
+  <div style="margin-top:16px">
+    <label>طريقة اللعب</label>
+    <div class="grid">
+      <div id="singleMode" class="mode selected" onclick="setMode(1)">
+        <strong>👤 لاعب واحد</strong><span>اختبر مستواك وسجّل أداءك.</span>
+      </div>
+      <div id="dualMode" class="mode" onclick="setMode(2)">
+        <strong>👥 لاعبان</strong><span>تنافسا سؤالاً بعد سؤال.</span>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:16px">
+    <label>عدد الأسئلة</label>
+    <select id="count" style="width:100%;padding:13px;border-radius:12px;background:#091a2b;color:white;border:1px solid #3b5d77">
+      <option value="12">12 سؤالاً — سريع</option>
+      <option value="18" selected>18 سؤالاً — متوازن</option>
+      <option value="24">24 سؤالاً — تحدٍ قوي</option>
+    </select>
+  </div>
+  <button class="btn primary" style="width:100%;margin-top:18px" onclick="startGame()">🚀 ابدأ اللعبة</button>
+</section>
+
+<section id="game" class="card hidden">
+  <div class="topbar">
+    <span id="turn"></span><span id="score"></span><span>⏱️ <span id="timer">0.0</span> ث</span>
+  </div>
+  <div class="progress"><div id="bar"></div></div>
+  <div class="topic" id="topic"></div>
+  <div class="question" id="question"></div>
+  <div id="diagram"></div>
+  <div id="options" class="options"></div>
+  <div id="feedback" class="feedback hidden"></div>
+  <div class="nextrow">
+    <span id="streak" class="streak"></span>
+    <button id="nextBtn" class="btn gold hidden" onclick="nextQuestion()">السؤال التالي ➜</button>
+  </div>
+</section>
+
+<section id="result" class="card hidden">
+  <h2>🏆 انتهى التحدي!</h2>
+  <div id="winner"></div>
+  <div id="resultStats"></div>
+  <div id="comparison"></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+    <button class="btn primary" onclick="location.reload()">🔄 لعب من جديد</button>
+    <button class="btn ghost" onclick="showReview()">📚 مراجعة الأخطاء</button>
+  </div>
+  <div id="review" class="hidden"></div>
+</section>
+
+<div class="footer">تطوير بن دائل • لعبة تعليمية للصف الأول الثانوي</div>
+</div>
+
+<script>
+const bank = [
+{t:"الدرس الأول: التطبيق",q:"ما الشرط الأساسي لكي تكون العلاقة تطبيقاً من س إلى ص؟",o:["كل عنصر في س يرتبط بعنصر واحد فقط في ص","كل عنصر في ص يرتبط بعنصر واحد فقط في س","يجب أن تكون س وص متساويتين","يجب أن تكون جميع العناصر متكررة"],a:0,e:"التطبيق يربط كل عنصر من المجال بعنصر واحد ووحيد من المجال المقابل."},
+{t:"الدرس الأول: التطبيق",q:"إذا كان س = {1، 2، 3}، فأي عبارة تصف مجال التطبيق ت: س ← ص؟",o:["س","ص","مدى التطبيق فقط","المجال المقابل فقط"],a:0,e:"المجال هو مجموعة عناصر س التي تبدأ منها الأسهم."},
+{t:"الدرس الأول: التطبيق",q:"صح أم خطأ: يجوز لعنصرين مختلفين من المجال أن يرتبطا بالعنصر نفسه في المجال المقابل.",o:["صح","خطأ"],a:0,e:"نعم، هذا مسموح في التطبيق؛ الممنوع هو أن يرتبط عنصر واحد من المجال بأكثر من صورة."},
+{t:"الدرس الأول: التطبيق",q:"إذا كانت ت(س) = س + 2، فما صورة العدد 5؟",o:["7","3","10","2"],a:0,e:"نعوّض س = 5: ت(5) = 5 + 2 = 7."},
+{t:"الدرس الأول: التطبيق",q:"إذا كان ت(س) = 2س - 1، فما ت(4)؟",o:["7","6","8","9"],a:0,e:"ت(4) = 2×4 - 1 = 8 - 1 = 7."},
+{t:"الدرس الأول: التطبيق",q:"ما اسم مجموعة صور عناصر المجال في التطبيق؟",o:["المدى","المجال","المجال المقابل","المعادلة"],a:0,e:"المدى هو مجموعة صور عناصر المجال، وهو مجموعة جزئية من المجال المقابل."},
+{t:"الدرس الثاني: تمثيل التطبيق",q:"أي مما يلي يعد أسلوباً من أساليب التعبير عن التطبيق؟",o:["الأزواج المرتبة","الجدول الدوري للعناصر","المتوسط الحسابي فقط","المحيط"],a:0,e:"من الأساليب الواردة: القاعدة (معادلة رياضية)، المخطط السهمي، الأزواج المرتبة، التمثيل الجدولي والرسم البياني."},
+{t:"الدرس الثاني: تمثيل التطبيق",q:"إذا كانت الأزواج المرتبة هي {(1،3)، (2،5)، (3،7)}، فما صورة 2؟",o:["5","2","3","7"],a:0,e:"في الزوج المرتب (س، ص)، صورة 2 هي العدد الموجود في الموضع الثاني للزوج الذي يبدأ بـ2، أي 5."},
+{t:"الدرس الثاني: تمثيل التطبيق",q:"للتطبيق ت(س)=س+1، أي زوج مرتب صحيح؟",o:["(2،3)","(3،3)","(1،1)","(4،2)"],a:0,e:"لأن ت(2)=2+1=3، فالزوج (2،3) صحيح."},
+{t:"الدرس الثاني: تمثيل التطبيق",q:"إذا كان ت(س)=س−2، فما ت(6)؟",o:["4","8","3","2"],a:0,e:"ت(6)=6−2=4."},
+{t:"الدرس الثاني: تمثيل التطبيق",q:"صح أم خطأ: التمثيل البياني للتطبيق يمكن أن يتضمن نقطتين لهما نفس قيمة س وصورتان مختلفتان.",o:["صح","خطأ"],a:1,e:"خطأ؛ إذا كان لهما نفس س وصورتان مختلفتان فلن يكون التمثيل تطبيقاً."},
+{t:"الدرس الثاني: تمثيل التطبيق",q:"إذا كان ت(س)=3−س، فما قيمة ت(2)؟",o:["1","5","−1","6"],a:0,e:"ت(2)=3−2=1."},
+{t:"الدرس الثالث: الصورة العكسية",q:"ما المقصود بالصورة العكسية للعنصر؟",o:["العناصر من المجال التي صورتها هي ذلك العنصر","العناصر في المجال المقابل فقط","كل عناصر المجال","قاعدة التطبيق نفسها"],a:0,e:"الصورة العكسية لعنصر من المجال المقابل هي مجموعة عناصر المجال التي ترتبط به."},
+{t:"الدرس الثالث: الصورة العكسية",q:"إذا كان ت(1)=4، فما الصورة العكسية للعنصر 4؟",o:["{1}","{4}","{0}","{1،4}"],a:0,e:"الصورة العكسية لـ4 هي مجموعة عناصر المجال التي صورتها 4، وهنا هي {1}."},
+{t:"الدرس الثالث: الصورة العكسية",q:"إذا كان ت(س)=س+2، فما الصورة العكسية للعدد 5؟",o:["{3}","{7}","{2}","{5}"],a:0,e:"نحل س+2=5، فنحصل على س=3؛ إذن الصورة العكسية هي {3}."},
+{t:"الدرس الثالث: الصورة العكسية",q:"إذا كان ت(س)=س+2، فما الصورة العكسية للعدد 4؟",o:["{2}","{6}","{4}","{1}"],a:0,e:"نحل س+2=4، فنحصل على س=2."},
+{t:"الدرس الثالث: الصورة العكسية",q:"صح أم خطأ: معكوس أي تطبيق يكون بالضرورة تطبيقاً.",o:["صح","خطأ"],a:1,e:"خطأ؛ المعكوس يكون تطبيقاً فقط إذا كان كل عنصر في المجال المقابل الأصلي له صورة عكسية وحيدة."},
+{t:"الدرس الثالث: الصورة العكسية",q:"إذا كان التطبيق يرسل 1 و2 إلى 5، فما الصورة العكسية للعدد 5؟",o:["{1،2}","{5}","{1}","{2}"],a:0,e:"الصورة العكسية تجمع كل عناصر المجال التي صورتها 5، لذلك هي {1،2}."},
+{t:"الدرس الثالث: الصورة العكسية",q:"إذا كان ت(س)=2س+1، فما الصورة العكسية للعدد 7؟",o:["{3}","{4}","{6}","{8}"],a:0,e:"نحل 2س+1=7 ⇒ 2س=6 ⇒ س=3."},
+{t:"الدرس الثالث: الصورة العكسية",q:"إذا كان معكوس العلاقة يعطي عنصراً واحداً له صورتان عكسيتان، فهل المعكوس تطبيق؟",o:["لا","نعم"],a:0,e:"لا؛ عنصر واحد في المجال لا يجوز أن يرتبط بصورتين مختلفتين في التطبيق."},
+{t:"الدرس الأول: التطبيق",q:"أي مجموعة تمثل المدى إذا كانت الصور هي 6، 7، 7، 9؟",o:["{6،7،9}","{6،7،7،9}","{9}","{6،9}"],a:0,e:"المدى مجموعة الصور دون تكرار، لذلك {6،7،9}."},
+{t:"الدرس الثاني: تمثيل التطبيق",q:"إذا كانت ت(س)=س+1 وكان المجال {1،2،3}، فما المدى؟",o:["{2،3،4}","{1،2،3}","{0،1،2}","{1،3,4}"],a:0,e:"نحسب الصور: 2،3،4؛ إذن المدى {2،3،4}."},
+{t:"الدرس الثالث: الصورة العكسية",q:"إذا كان ت(س)=3س، فما الصورة العكسية للعدد 12؟",o:["{4}","{9}","{15}","{36}"],a:0,e:"نحل 3س=12 ⇒ س=4."},
+{t:"الدرس الأول: التطبيق",q:"أي عبارة صحيحة عن التطبيق؟",o:["كل عنصر من المجال له صورة واحدة فقط","كل عنصر في المجال المقابل يجب أن تكون له صورة","لا يمكن أن تتساوى صورتان","المجال والمدى متساويان دائماً"],a:0,e:"هذه هي القاعدة الأساسية للتطبيق: لكل عنصر في المجال صورة واحدة ووحيدة."},
+{t:"الدرس الثاني: تمثيل التطبيق",q:"إذا كانت ت(س)=−س+3، فما الزوج المرتب عندما س=2؟",o:["(2،1)","(1،2)","(2،5)","(3،2)"],a:0,e:"ت(2)=−2+3=1، لذلك الزوج هو (2،1)."},
+{t:"الدرس الثالث: الصورة العكسية",q:"إذا كانت الأزواج {(1،4)،(2،4)،(3،5)}، فما الصورة العكسية للعدد 4؟",o:["{1،2}","{4}","{1،2،3}","{2،3}"],a:0,e:"العنصران 1 و2 صورتهما 4، لذا الصورة العكسية هي {1،2}."},
+{t:"الدرس الأول: التطبيق",q:"صح أم خطأ: المدى مجموعة جزئية من المجال المقابل.",o:["صح","خطأ"],a:0,e:"صح؛ المدى يتكون من صور عناصر المجال، لذلك هو مجموعة جزئية من المجال المقابل."},
+{t:"الدرس الثالث: الصورة العكسية",q:"إذا كان ت(س)=س−3، فما الصورة العكسية للعدد 2؟",o:["{5}","{−1}","{2}","{6}"],a:0,e:"نحل س−3=2 ⇒ س=5."}
+];
+
+let mode=1, players=[], currentPlayer=0, questions=[], qi=0, startTime=0, timerInt=null, answered=false;
+let stats=[], mistakes=[], streak=0;
+
+function setMode(m){
+ mode=m;
+ document.getElementById('singleMode').classList.toggle('selected',m===1);
+ document.getElementById('dualMode').classList.toggle('selected',m===2);
+ document.getElementById('p2box').style.opacity=m===2?1:.55;
+}
+function shuffle(a){return a.sort(()=>Math.random()-0.5)}
+function normalize(s){return String(s).trim().replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/،/g,",")}
+function startGame(){
+ const n1=document.getElementById('p1').value.trim()||"الطالب";
+ const n2=document.getElementById('p2').value.trim()||"اللاعب الثاني";
+ players=mode===1?[n1]:[n1,n2];
+ stats=players.map(n=>({name:n,correct:0,wrong:0,total:0,fast:Infinity,time:0,score:0}));
+ mistakes=[];
+ const count=+document.getElementById('count').value;
+ questions=shuffle([...bank]).slice(0,count);
+ qi=0;currentPlayer=0;streak=0;
+ document.getElementById('setup').classList.add('hidden');
+ document.getElementById('result').classList.add('hidden');
+ document.getElementById('game').classList.remove('hidden');
+ render();
+}
+function render(){
+ answered=false;
+ const q=questions[qi], st=stats[currentPlayer];
+ document.getElementById('turn').textContent=mode===2?`دور: ${st.name}`:`السؤال ${qi+1} من ${questions.length}`;
+ document.getElementById('score').textContent=`⭐ ${st.score} نقطة`;
+ document.getElementById('bar').style.width=(qi/questions.length*100)+"%";
+ document.getElementById('topic').textContent=q.t;
+ document.getElementById('question').textContent=q.q;
+ document.getElementById('diagram').textContent="";
+ document.getElementById('diagram').style.display="none";
+ const opts=document.getElementById('options'); opts.innerHTML="";
+ q.o.forEach((x,i)=>{
+   const b=document.createElement('button');b.className="option";b.textContent=`${"أبجده"[i]||i+1}) ${x}`;
+   b.onclick=()=>answer(i);opts.appendChild(b);
+ });
+ const f=document.getElementById('feedback');f.className="feedback hidden";f.innerHTML="";
+ document.getElementById('nextBtn').classList.add('hidden');
+ document.getElementById('streak').textContent=streak>=2?`🔥 سلسلة صحيحة: ${streak}`:"";
+ startTime=performance.now();
+ clearInterval(timerInt);timerInt=setInterval(()=>document.getElementById('timer').textContent=((performance.now()-startTime)/1000).toFixed(1),100);
+}
+function answer(i){
+ if(answered)return; answered=true; clearInterval(timerInt);
+ const q=questions[qi], st=stats[currentPlayer], secs=(performance.now()-startTime)/1000;
+ st.total++; st.time+=secs; if(secs<st.fast)st.fast=secs;
+ [...document.querySelectorAll('.option')].forEach((b,k)=>{b.disabled=true;if(k===q.a)b.classList.add('correct');if(k===i&&i!==q.a)b.classList.add('wrong')});
+ const f=document.getElementById('feedback');
+ if(i===q.a){
+   st.correct++; st.score+=10+Math.max(0,Math.round(5-secs)); streak++;
+   f.className="feedback good";f.innerHTML=`✅ <b>إجابة صحيحة!</b><br>${q.e}`;
+ }else{
+   st.wrong++; st.score=Math.max(0,st.score-2); streak=0;
+   mistakes.push({name:st.name,q:q.q,your:q.o[i],correct:q.o[q.a],e:q.e});
+   f.className="feedback bad";f.innerHTML=`❌ <b>ليست صحيحة.</b><br><b>التصحيح:</b> الإجابة الصحيحة هي: <b>${q.o[q.a]}</b><br>${q.e}`;
+ }
+ f.classList.remove('hidden');
+ document.getElementById('nextBtn').textContent=qi===questions.length-1?"🏁 عرض النتيجة":"السؤال التالي ➜";
+ document.getElementById('nextBtn').classList.remove('hidden');
+}
+function nextQuestion(){
+ if(qi===questions.length-1){finish();return}
+ qi++;
+ if(mode===2) currentPlayer=(currentPlayer+1)%players.length;
+ render();
+}
+function finish(){
+ clearInterval(timerInt);document.getElementById('game').classList.add('hidden');document.getElementById('result').classList.remove('hidden');
+ let best=stats.reduce((a,b)=>a.score>b.score?a:b);
+ document.getElementById('winner').innerHTML=mode===2?`<div class="card" style="margin-top:0;text-align:center">🏆 الفائز: <b style="color:var(--accent2);font-size:24px">${best.name}</b></div>`:"<p class='small'>أحسنت! هذه نتيجة تدريبك.</p>";
+ let html='<div class="stats">';
+ stats.forEach(s=>{
+   const acc=s.total?Math.round(s.correct/s.total*100):0;
+   html+=`<div class="stat"><b>${s.score}</b><span>النقاط — ${s.name}</span></div>
+   <div class="stat"><b>${acc}%</b><span>نسبة النجاح</span></div>
+   <div class="stat"><b>${s.correct}</b><span>صحيحة</span></div>
+   <div class="stat"><b>${s.wrong}</b><span>خاطئة</span></div>
+   <div class="stat"><b>${s.fast===Infinity?"—":s.fast.toFixed(1)+"ث"}</b><span>أسرع إجابة</span></div>`;
+ });
+ html+='</div>';
+ document.getElementById('resultStats').innerHTML=html;
+ if(mode===2){
+   document.getElementById('comparison').innerHTML='<h3>📊 مقارنة اللاعبين</h3><table><tr><th>اللاعب</th><th>النقاط</th><th>صحيحة</th><th>خاطئة</th><th>متوسط الزمن</th></tr>'+
+   stats.map(s=>`<tr><td>${s.name}</td><td>${s.score}</td><td>${s.correct}</td><td>${s.wrong}</td><td>${s.total?(s.time/s.total).toFixed(1):"—"}ث</td></tr>`).join('')+'</table>';
+ }else document.getElementById('comparison').innerHTML="";
+}
+function showReview(){
+ const r=document.getElementById('review');r.classList.remove('hidden');
+ if(!mistakes.length){r.innerHTML='<div class="feedback good">🎉 لم تسجل أي أخطاء! ممتاز.</div>';return}
+ r.innerHTML='<h3>📚 مراجعة الأخطاء</h3>'+mistakes.map((m,i)=>`<div class="card" style="background:#0b1d30"><b>${i+1}. ${m.q}</b><p>إجابتك: <span style="color:var(--bad)">${m.your}</span></p><p>التصحيح: <span style="color:var(--good)">${m.correct}</span></p><p class="small">${m.e}</p></div>`).join('');
+}
+setMode(1);
+</script>
+</body>
+</html>
